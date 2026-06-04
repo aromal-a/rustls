@@ -385,7 +385,7 @@ pub mod internal {
 pub use crate::builder::{ConfigBuilder, ConfigSide, WantsVerifier};
 pub use crate::common_state::{CommonState, ConnectionOutputs, HandshakeKind};
 pub use crate::conn::{
-    Connection, IoState, KeyingMaterialExporter, Reader, SideData, Writer, kernel,
+    Connection, IoState, KeyingMaterialExporter, Reader, SideData, Writer, kernel, split,
 };
 pub use crate::error::Error;
 pub use crate::key_log::{KeyLog, NoKeyLog};

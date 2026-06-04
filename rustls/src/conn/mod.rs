@@ -32,6 +32,11 @@ mod send;
 use send::DEFAULT_BUFFER_LIMIT;
 pub(crate) use send::{SendOutput, SendPath};
 
+/// Types related to "split" mode.
+///
+/// See [`split::SplitConnection`] for more information.
+pub mod split;
+
 use crate::crypto::cipher::OutboundPlain;
 
 /// A trait generalizing over buffered client or server connections.
@@ -620,6 +625,33 @@ impl<Side: SideData> ConnectionCommon<Side> {
                 .recv
                 .has_received_close_notify,
         }
+    }
+
+    pub(crate) fn split(self) -> Result<split::SplitConnection<Side>, Error> {
+        // `SplitConnection` cannot be used to progress a handshake.
+        if self.is_handshaking() {
+            return Err(ApiMisuse::SplitDuringHandshake.into());
+        }
+
+        // We are about to drop `Buffers`
+        if !self
+            .buffers
+            .received_plaintext
+            .is_empty()
+            || !self
+                .buffers
+                .deframer_buffer
+                .filled()
+                .is_empty()
+            || !self
+                .buffers
+                .sendable_plaintext
+                .is_empty()
+        {
+            return Err(ApiMisuse::SplitWithPendingBuffers.into());
+        }
+
+        split::SplitConnection::try_from(self.core)
     }
 }
 
