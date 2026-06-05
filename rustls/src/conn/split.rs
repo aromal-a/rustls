@@ -60,7 +60,8 @@ impl SendTraffic {
     pub fn write(&mut self, application_data: OutboundPlain<'_>) -> Result<Vec<Vec<u8>>, Error> {
         let mut inner = self.0.lock().unwrap();
         inner.maybe_refresh_traffic_keys();
-        inner.write_plaintext(application_data)
+        inner.send_appdata_encrypt(application_data);
+        Ok(inner.sendable_tls.take())
     }
 
     /// Obtain any pending data to write to the peer.

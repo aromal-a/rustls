@@ -28,34 +28,6 @@ pub(crate) struct SendPath {
 }
 
 impl SendPath {
-    pub(crate) fn write_plaintext(
-        &mut self,
-        payload: OutboundPlain<'_>,
-    ) -> Result<Vec<Vec<u8>>, Error> {
-        let fragments = self
-            .message_fragmenter
-            .fragment_payload(
-                ContentType::ApplicationData,
-                ProtocolVersion::TLSv1_2,
-                payload,
-            );
-
-        for f in 0..fragments.len() {
-            self.preflight_encrypt(f)?;
-        }
-
-        self.perhaps_write_key_update();
-        for m in fragments {
-            self.sendable_tls.append(
-                self.encrypt_state
-                    .encrypt_outgoing(m)
-                    .encode(),
-            );
-        }
-
-        Ok(self.sendable_tls.take())
-    }
-
     pub(crate) fn send_early_plaintext(&mut self, data: &[u8]) -> usize {
         debug_assert!(self.encrypt_state.is_encrypting());
 
@@ -94,7 +66,7 @@ impl SendPath {
     }
 
     /// Like send_msg_encrypt, but operate on an appdata directly.
-    fn send_appdata_encrypt(&mut self, payload: OutboundPlain<'_>) -> usize {
+    pub(crate) fn send_appdata_encrypt(&mut self, payload: OutboundPlain<'_>) -> usize {
         let len = payload.len();
         self.send_messages(
             self.message_fragmenter
