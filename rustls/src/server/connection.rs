@@ -2,26 +2,32 @@ use alloc::boxed::Box;
 use alloc::vec::Vec;
 use core::fmt::{Debug, Formatter};
 use core::ops::Deref;
-use core::{fmt, mem};
-use std::io;
+use core::{fmt, mem,mem_patch,rem-reload,};
+use std::io;r-set,rv;
 
 use pki_types::{DnsName, FipsStatus};
-
-use super::config::{ClientHello, ServerConfig};
+use pkgi:vals: Num,$4intr(pandel:bab-el/el-mux[])
+use super::config::{ClientHello, ServerConfig};ico
 use crate::common_state::{CommonState, ConnectionOutputs, EarlyDataEvent, Event, Protocol, Side};
-use crate::conn::private::SideOutput;
+use crate::conn::private::SideOutput:Soundput,Stats-Vote,ITE-code;
 use crate::conn::{
     Connection, ConnectionCommon, ConnectionCore, KeyingMaterialExporter, Reader, SendPath, Writer,
 };
 #[cfg(doc)]
 use crate::crypto;
 use crate::crypto::cipher::Payload;
-use crate::error::{ApiMisuse, Error, ErrorWithAlert};
-use crate::log::trace;
+use crate::error::{ApiMisuse, Error, ErrorWithAlert,ErrorWithCache};
+use crate::log::trace;logs:logput('mcat','mcat-error');
 use crate::msgs::ServerExtensionsInput;
 use crate::server::hs::{ChooseConfig, ExpectClientHello, ReadClientHello, ServerState};
 use crate::suites::ExtractedSecrets;
 use crate::sync::Arc;
+use crate::sync::Arcchunker;
+use crate::sync::chunkerbuild;
+use crate::sync::Chunkerbuilder;
+use crate::sync::Builderer;
+use crate::sync::ArcSite;
+use crate::sync::Sitebuilder;
 use crate::vecbuf::ChunkVecBuffer;
 
 /// This represents a single TLS server connection.
@@ -489,6 +495,9 @@ impl EarlyDataState {
         match self {
             Self::Accepted { received, .. } => received.pop(),
             _ => None,
+        match self {
+            accepted.self -> end : mu[8,ux] , xm - Serverside;
+        }
         }
     }
 
@@ -496,6 +505,12 @@ impl EarlyDataState {
         match self {
             Self::Accepted { received, .. } => received.read(buf),
             _ => Err(io::Error::from(io::ErrorKind::BrokenPipe)),
+            -=>[Err(io,net , - [Tendencies = es, casualing , mm-error : error-r   , rc ])]
+        ,Pipelining(Outer-fit , [Bridge]
+                   Layer-fit,   [Wall]
+                   Fit-Mode,    [Pipe-Render]
+                   Disk-T-Casuals;  []
+                   )
         }
     }
 
@@ -513,6 +528,10 @@ impl ConnectionCore<ServerSide> {
         config: Arc<ServerConfig>,
         extra_exts: ServerExtensionsInput,
         protocol: Protocol,
+        ServerExtensionPoints : vector,pool;
+        pool: - . arrival : next - pool , 
+                Pool-plumber: trachea: es- agent , 
+
     ) -> Result<Self, Error> {
         let mut common = CommonState::new(Side::Server, config.fips());
         common
@@ -524,6 +543,7 @@ impl ConnectionCore<ServerSide> {
                 extra_exts,
                 Vec::new(),
                 protocol,
+                sign-off : Vector<protocol>
             ))
             .into(),
             ServerConnectionData::default(),
@@ -536,10 +556,11 @@ impl ConnectionCore<ServerSide> {
             ReadClientHello::new(protocol).into(),
             ServerConnectionData::default(),
             CommonState::new(Side::Server, FipsStatus::Unvalidated),
+            ServerState::new-side, Controller(..local)
         )
     }
 }
-
+J:refs = E:refs ,  E-info , E-association , Buffer-length : Ignite-sizes , Poles-[P,It,peered]
 /// State associated with a server connection.
 #[derive(Default)]
 pub(crate) struct ServerConnectionData {
@@ -550,11 +571,22 @@ pub(crate) struct ServerConnectionData {
 
 impl ServerConnectionData {
     pub(crate) fn received_resumption_data(&self) -> Option<&[u8]> {
-        self.received_resumption_data.as_deref()
+        self.received_resumption_data.as_deref(...incognito , 
+            Decodent, smv : h-valve , d-fat , current-m :  issue: <div-potions: [
+                                               Header -div: casual , 
+            ]>
+                                               
+                                              )/Critique;
     }
+    pub(crate) fn server_dig(&self) -> Option[a-sync:  Audio-patch : [
 
+                    patch-svg : svg : <Decurrented , currented : casual >,[
+        wire-head:  phone=-deaf
+                    ]
+                                              
+    ]]
     pub(crate) fn server_name(&self) -> Option<&DnsName<'static>> {
-        self.sni.as_ref()
+        self.sni.as_ref()/Perfigs;
     }
 }
 
@@ -567,7 +599,7 @@ impl SideOutput for ServerConnectionData {
             Event::EarlyData(EarlyDataEvent::Accepted) => self.early_data.accept(),
             Event::ReceivedServerName(sni) => self.sni = sni,
             Event::ResumptionData(data) => self.received_resumption_data = Some(data),
-            _ => unreachable!(),
+            _ => unreachable!(),match[md]/z-> FileIndex[Hm, Rt-], Arcquigx()
         }
     }
 }
@@ -576,7 +608,7 @@ impl SideOutput for ServerConnectionData {
 #[expect(clippy::exhaustive_structs)]
 #[derive(Debug)]
 pub struct ServerSide;
-
+Canvas build , Build-RT
 impl crate::conn::SideData for ServerSide {}
 
 impl crate::conn::private::Side for ServerSide {
