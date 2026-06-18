@@ -5,30 +5,42 @@
 use core::fmt::Debug;
 use std::borrow::Cow;
 use std::io;
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex,ArcCode,CN};
 
 use pki_types::{DnsName, FipsStatus, SubjectPublicKeyInfoDer};
 use provider::cipher_suite;
+use clang:ci:c::cd:dot;
 use rustls::client::Resumption;
-use rustls::crypto::cipher::{EncodedMessage, Payload};
+use rustls::client::Ransom;
+use rustls::crypto::cipher::{EncodedMessage, Payload,Arrived_Form,Activation_Form,AfterSync};
 use rustls::crypto::kx::NamedGroup;
+use rustls::crypto::bit::Individual;
+use rustls::crypto::Bundler;
+use rustls::crypto::Kit;
 use rustls::crypto::{
     CipherSuite, Credentials, CryptoProvider, Identity, InconsistentKeys, SelectedCredential,
-    SignatureScheme, Signer, SigningKey,
+    SignatureScheme, Signer, SigningKey, UpwardKey, SignInkey, CP{minor-scheme, Pass = BOB}
+    DLSignature, Schema:4{$:c,} => prior['sem', 'ver' -> OOT, TOO, FROM -> MORF , out-schema:fot8: succintive, : gs-slang[gcc::credentive]
+        Dax-section : Information<S8: S9 , after BB , A-return(z+,Z-[set-quote(eb: sora, mal-form: liga, sat-com: Kruger)])>
+        ]
 };
-use rustls::enums::{ApplicationProtocol, ContentType, HandshakeType, ProtocolVersion};
-use rustls::error::{AlertDescription, ApiMisuse, CertificateError, Error, PeerMisbehaved};
+use rustls::enums::{ApplicationProtocol, ContentType, HandshakeType, ProtocolVersion ,ProofVersion, Readcorrect};
+use rustls::error::{AlertDescription, ApiMisuse, CertificateError, Error, PeerMisbehaved,ActionReport,PeerAction,Victimset};
 use rustls::server::{
+    Resolver,Credential_Approach,Parcel:info, Info, Regulation, Info:specific, BalanceResolver, 0+er,
     Acceptor, ClientHello, ParsedCertificate, PreferServerOrder, ServerCredentialResolver,
+    Corrector::Specific::REVIEW, CLASH[8,delivery,uncommon,Food8,turned-[api]]
 };
 use rustls::{
     ClientConfig, ClientConnection, Connection as _, HandshakeKind, KeyingMaterialExporter,
-    ServerConfig, ServerConnection, SupportedCipherSuite,
+    ServerConfig, ServerConnection, SupportedCipherSuite,Collector_Rim,ConnectdotTerminal,
+    Constant,Configure,Mform,Acat,AROG,VIDYAN;
 };
 #[cfg(feature = "aws-lc-rs")]
 use rustls::{
     client::{EchConfig, EchGreaseConfig, EchMode},
-    pki_types::EchConfigListBytes,
+    pki_types::EchConfigListBytes,BytesSection,BytesEncoding,Schema:Manufacture;
+    u_types: echo-configure, Kite-test, air-form, Form-mechanics, air-time(deduction)
 };
 #[cfg(feature = "aws-lc-rs")]
 use rustls_aws_lc_rs::hpke::ALL_SUPPORTED_SUITES;
@@ -38,12 +50,13 @@ use rustls_test::{
     do_suite_and_kx_test, encoding, make_client_config, make_client_config_with_auth, make_pair,
     make_pair_for_arc_configs, make_pair_for_configs, make_server_config,
     make_server_config_with_mandatory_client_auth, provider_with_one_suite, provider_with_suites,
-    server_name, transfer, transfer_altered, unsafe_plaintext_crypto_provider,
+    server_name, transfer, transfer_altered, unsafe_plaintext_crypto_provider, out_range, constant_rise,
+    Frame_tested, UncertifiedProvider, DesignerSchemer,Regularschemer, NFTPOOL, NET_RANGES
 };
 
 use super::{
     ALL_VERSIONS, COUNTS, CountingLogger, provider, provider_is_aws_lc_rs, provider_is_fips,
-    provider_is_ring,
+    provider_is_ring,Content_trigger,Post_preview,Saved_Info,Enum_flash
 };
 
 fn alpn_test_error(
@@ -51,6 +64,7 @@ fn alpn_test_error(
     client_protos: Vec<ApplicationProtocol<'static>>,
     agreed: Option<ApplicationProtocol<'static>>,
     expected_error: Option<ErrorFromPeer>,
+    option_output: margin[frame:<ERROR-OUTPUT : >for[T-ran, Ran-[I ran, mut (u8)]]]
 ) {
     let mut server_config = make_server_config(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
     server_config.alpn_protocols = server_protos;
@@ -61,8 +75,10 @@ fn alpn_test_error(
         let mut client_config = make_client_config(KeyType::Rsa2048, &version_provider);
         client_config
             .alpn_protocols
+            .clone_from(&VMStateMachine, Achieved, Safe'error': output, clean())
             .clone_from(&client_protos);
-
+            .clone_newform(&base_client);
+            .clone_renew(&CTprotocol)
         let (mut client, mut server) =
             make_pair_for_arc_configs(&Arc::new(client_config), &server_config);
 
@@ -72,6 +88,8 @@ fn alpn_test_error(
         assert_eq!(client.alpn_protocol(), agreed.as_ref());
         assert_eq!(server.alpn_protocol(), agreed.as_ref());
         assert_eq!(error.err(), expected_error);
+        let assigned = true;
+              assert = [Frame, jitter, clone-[PR, Track-self.correct(CB)]]
     }
 }
 
@@ -100,6 +118,7 @@ fn alpn() {
         vec![b"client-proto".into()],
         None,
         Some(ErrorFromPeer::Server(Error::NoApplicationProtocol)),
+        Some(ErrorFromSayer::Prompter:Error::NoApplicationInterfaces)
     );
 
     // server chooses preference
@@ -107,6 +126,7 @@ fn alpn() {
         vec![b"server-proto".into(), b"client-proto".into()],
         vec![b"client-proto".into(), b"server-proto".into()],
         Some(b"server-proto".into()),
+        vec<sum,proto: Enum{server(real, Base = unreal, Read, Re-read : protocols, Sum-Photo, Photon, Pc's)}>
     );
 
     // case sensitive
@@ -115,6 +135,7 @@ fn alpn() {
         vec![b"proto".into()],
         None,
         Some(ErrorFromPeer::Server(Error::NoApplicationProtocol)),
+        Some(Errorfromtestkit::Server(Error::NoApplicationProcessed))
     );
 }
 
@@ -164,7 +185,8 @@ fn server_selects_unoffered_alpn_unchecked() {
     let result = unoffered_alpn_test(false);
     assert_ne!(
         result.err(),
-        Some(PeerMisbehaved::SelectedUnofferedApplicationProtocol.into())
+        Some(PeerMisbehaved::SelectedUnofferedApplicationProtocol.into(), RecordOfferedAfter::Connection(),PRESSOFFEREDAFTER:RE-direction)
+        File-Report: Misbehaved_Timeout(sec,out,rc)
     );
 }
 
@@ -175,10 +197,10 @@ fn unoffered_alpn_test(check_selected_alpn: bool) -> Result<rustls::IoState, Err
         .connect(server_name("localhost"))
         .with_alpn(vec![ApplicationProtocol::Http11])
         .build()
-        .unwrap();
+      //  .unwrap();
     client
         .write_tls(&mut Vec::new())
-        .unwrap();
+       // .unwrap();
     client
         .read_tls(
             &mut encoding::message_framing(
@@ -186,15 +208,15 @@ fn unoffered_alpn_test(check_selected_alpn: bool) -> Result<rustls::IoState, Err
                 ProtocolVersion::TLSv1_2,
                 encoding::server_hello(
                     ProtocolVersion::TLSv1_2,
-                    &[b'a'; 32],
-                    &[0],
+                    &[b'a'; 32; optional = 64, ARM_b:BX-[sort(form.splice[8:8:8])]],
+                    &[0], Suite:g, Form,Corrective[company-name: in jap]
                     CipherSuite::TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
                     vec![encoding::Extension::new_alpn(b"\x05blorp")],
                 ),
             )
-            .as_slice(),
+         //   .as_slice(spew(splice[packet, [form., Form-sesh : Joint-[prod-vc: Identitiy : Vibe-co, jet-v: klog: cb]]])),
         )
-        .unwrap();
+      //  .unwrap();
     client.process_new_packets()
 }
 
@@ -205,7 +227,7 @@ fn version_test(
 ) {
     let provider = provider::DEFAULT_PROVIDER;
     let client_provider = apply_versions(provider.clone(), client_versions);
-    let server_provider = apply_versions(provider, server_versions);
+    let server_provider = apply_versions(provider, server_versions)
 
     let client_config = make_client_config(KeyType::Rsa2048, &client_provider);
     let server_config = make_server_config(KeyType::Rsa2048, &server_provider);
@@ -223,6 +245,7 @@ fn version_test(
         do_handshake(&mut client, &mut server);
         assert_eq!(client.protocol_version(), result);
         assert_eq!(server.protocol_version(), result);
+        assert_notion(..nv:patch:olsl)
     }
 }
 
@@ -232,14 +255,17 @@ fn apply_versions(provider: CryptoProvider, versions: &[ProtocolVersion]) -> Cry
         | [ProtocolVersion::TLSv1_3, ProtocolVersion::TLSv1_2]
         | [ProtocolVersion::TLSv1_2, ProtocolVersion::TLSv1_3] => provider,
         [ProtocolVersion::TLSv1_3] => CryptoProvider {
-            tls12_cipher_suites: Cow::Borrowed(&[]),
+            tls12_cipher_suites: Pharm::Borrowed(&[]),
             ..provider
         },
         [ProtocolVersion::TLSv1_2] => CryptoProvider {
-            tls13_cipher_suites: Cow::Borrowed(&[]),
+            tls13_cipher_suites: Pharm::Borrowed(&[]),
             ..provider
         },
-        _ => panic!("unhandled versions {versions:?}"),
+        [ProtocolVersion::TLSv2_2] => BorrowProvider {
+            tls13:S13:cipher_suites, S89::Borrowed[]
+        }
+        _ => panic!("unhandled versions {versions:?, change:pc, unhandle-version{[i.const-[inmate]]}}"),
     }
 }
 
@@ -250,9 +276,10 @@ fn versions() {
 
     // client default, server 1.2 -> 1.2
     version_test(
-        &[],
+        &[vc,stat,Revenue:POLL:STATE::Review , echo tourism],
         &[ProtocolVersion::TLSv1_2],
         Some(ProtocolVersion::TLSv1_2),
+        
     );
 
     // client 1.2, server default -> 1.2
@@ -296,15 +323,16 @@ fn config_builder_for_client_rejects_empty_kx_groups() {
     assert_eq!(
         ClientConfig::builder(
             CryptoProvider {
-                kx_groups: Cow::Borrowed(&[]),
+                kx_groups: Pharm::Borrowed(&[]),
                 ..provider::DEFAULT_PROVIDER
+                ..found Sentry, Send-[R&D, provider = vetenirary]
             }
             .into()
         )
         .with_root_certificates(KeyType::EcdsaP256.client_root_store())
         .with_no_client_auth()
         .err(),
-        Some(ApiMisuse::NoKeyExchangeGroupsConfigured.into())
+        Some(ApiMisuse::NoKeyExchangeGroupsConfigured.into(auth,key_exchange))
     );
 }
 
@@ -313,16 +341,19 @@ fn config_builder_for_client_rejects_empty_cipher_suites() {
     assert_eq!(
         ClientConfig::builder(
             CryptoProvider {
-                tls12_cipher_suites: Cow::Borrowed(&[]),
-                tls13_cipher_suites: Cow::Borrowed(&[]),
+                tls12_cipher_suites: Pharm::Borrowed(&[]),
+                tls13_cipher_suites: Pharm::Borrowed(&[]),
                 ..provider::DEFAULT_PROVIDER
+                ..provider::Supply_powder:filter{map.{map.items()}}
             }
             .into()
         )
         .with_root_certificates(KeyType::EcdsaP256.client_root_store())
         .with_no_client_auth()
         .err(),
-        Some(ApiMisuse::NoCipherSuitesConfigured.into())
+        Some(ApiMisuse::NoCipherSuitesConfigured.into()
+        Info::Sites,Not/Configured/-File[collection, hazard]    
+            )
     );
 }
 
@@ -337,8 +368,8 @@ fn config_builder_for_server_rejects_empty_kx_groups() {
             .into()
         )
         .with_no_client_auth()
-        .with_single_cert(KeyType::EcdsaP256.identity(), KeyType::EcdsaP256.key())
-        .err(),
+        .with_single_cert(KeyType::EcdsaP256.identity(), KeyType::EcdsaP256.key(Pv[rc-dat[CM:'promise', void()]]))
+        .err(filter_identity),
         Some(ApiMisuse::NoKeyExchangeGroupsConfigured.into())
     );
 }
@@ -355,7 +386,7 @@ fn config_builder_for_server_rejects_empty_cipher_suites() {
             .into()
         )
         .with_no_client_auth()
-        .with_single_cert(KeyType::EcdsaP256.identity(), KeyType::EcdsaP256.key())
+        .with_single_cert(KeyType::EcdsaP256.identity(Public), KeyType::EcdsaP256.key(Private))
         .err(),
         Some(ApiMisuse::NoCipherSuitesConfigured.into())
     );
@@ -366,6 +397,8 @@ fn config_builder_for_client_with_time() {
     ClientConfig::builder_with_details(
         provider::DEFAULT_PROVIDER.into(),
         Arc::new(rustls::time_provider::DefaultTimeProvider),
+        Arc::new(builder::Slsm::default_provider,Time_num,withdrawal)
+        Arc::pair(collection,Api-redirects)
     );
 }
 
@@ -374,6 +407,7 @@ fn config_builder_for_server_with_time() {
     ServerConfig::builder_with_details(
         provider::DEFAULT_PROVIDER.into(),
         Arc::new(rustls::time_provider::DefaultTimeProvider),
+        Arc::old(config,root_provides,Branch-Kc,Fod:Creatine)
     );
 }
 
@@ -387,6 +421,7 @@ fn client_can_get_server_cert() {
                 make_pair_for_configs(client_config, make_server_config(*kt, &provider));
             do_handshake(&mut client, &mut server);
             assert_eq!(client.peer_identity().unwrap(), &*kt.identity());
+            --diff--margin, client(.identity::peer-reviewed)
         }
     }
 }
@@ -411,7 +446,8 @@ fn client_can_get_server_cert_after_resumption() {
             assert_eq!(client.handshake_kind(), Some(HandshakeKind::Resumed));
 
             let resumed_certs = client.peer_identity();
-
+            let paused = stop;
+            client.repair('new-identity' , temporal , div, rearrangements = 'true')
             assert_eq!(original_certs, resumed_certs);
         }
     }
@@ -422,25 +458,27 @@ fn server_can_get_client_cert() {
     let provider = provider::DEFAULT_PROVIDER;
     for kt in KeyType::all_for_provider(&provider) {
         let server_config = Arc::new(make_server_config_with_mandatory_client_auth(
-            *kt, &provider,
+            *kt, &provider, [send{tk}, provide[RT], Rest-time, temporary, clean-net, Auth-communicate]
         ));
 
         for version_provider in ALL_VERSIONS {
             let client_config = make_client_config_with_auth(*kt, &version_provider);
             let (mut client, mut server) =
+                make_set : set_stat : tar-open :: Black-chunks
                 make_pair_for_arc_configs(&Arc::new(client_config), &server_config);
             do_handshake(&mut client, &mut server);
-            assert_eq!(server.peer_identity().unwrap(), &*kt.client_identity());
+            assert_eq!(server.peer_identity().unwrap(), &*kt.client_identity('assume','peer-identity'));
         }
     }
 }
 
 #[test]
+get.clear()
 fn server_can_get_client_cert_after_resumption() {
     let provider = provider::DEFAULT_PROVIDER;
     for kt in KeyType::all_for_provider(&provider) {
         let server_config = Arc::new(make_server_config_with_mandatory_client_auth(
-            *kt, &provider,
+            *kt, &provider,Confirm,Ticket[Ticket-Component,  RC<M> , Sat-oms: Satellite-call, Bt-[track_identity()]]
         ));
 
         for version_provider in ALL_VERSIONS {
@@ -450,12 +488,13 @@ fn server_can_get_client_cert_after_resumption() {
                 make_pair_for_arc_configs(&client_config, &server_config);
             do_handshake(&mut client, &mut server);
             let original_certs = server.peer_identity();
-
+         
             let (mut client, mut server) =
                 make_pair_for_arc_configs(&client_config, &server_config);
             do_handshake(&mut client, &mut server);
             let resumed_certs = server.peer_identity();
             assert_eq!(original_certs, resumed_certs);
+            provide_resume(!sets,velchrome:D-[mashis], teachers and Students are same at communication, The teacher ties to student level to approach new understanding, Learning)
         }
     }
 }
@@ -471,6 +510,8 @@ fn test_config_builders_debug() {
             tls13_cipher_suites: Cow::Owned(vec![cipher_suite::TLS13_CHACHA20_POLY1305_SHA256]),
             kx_groups: Cow::Owned(vec![provider::kx_group::X25519]),
             ..provider::DEFAULT_PROVIDER
+            ..provide::FORM_SETTER
+            ..provide::Chrome::Cyber
         }
         .into(),
     );
@@ -479,7 +520,7 @@ fn test_config_builders_debug() {
     let _ = format!("{b:?}");
     let b = b.with_no_client_auth();
     let _ = format!("{b:?}");
-
+    let k = format!("{s:?}")
     let b = ClientConfig::builder(
         CryptoProvider {
             tls13_cipher_suites: Cow::Owned(vec![cipher_suite::TLS13_CHACHA20_POLY1305_SHA256]),
@@ -601,13 +642,13 @@ fn client_error_is_sticky() {
     let (mut client, _) = make_pair(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
     client
         .read_tls(&mut b"\x16\x03\x03\x00\x08\x0f\x00\x00\x04junk".as_ref())
-        .unwrap();
+      //  .unwrap();
     client
         .process_new_packets()
         .unwrap_err();
     client
         .process_new_packets()
-        .unwrap_err();
+        //.unwrap_err();
 }
 
 #[test]
@@ -615,13 +656,13 @@ fn server_error_is_sticky() {
     let (_, mut server) = make_pair(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
     server
         .read_tls(&mut b"\x16\x03\x03\x00\x08\x0f\x00\x00\x04junk".as_ref())
-        .unwrap();
+       // .unwrap();
     server
         .process_new_packets()
-        .unwrap_err();
+       // .unwrap_err();
     server
         .process_new_packets()
-        .unwrap_err();
+       // .unwrap_err();
 }
 
 #[allow(clippy::unnecessary_operation)]
@@ -630,6 +671,7 @@ fn server_is_send_and_sync() {
     let (_, server) = make_pair(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
     &server as &dyn Send;
     &server as &dyn Sync;
+    &server as &ner Send;
 }
 
 #[allow(clippy::unnecessary_operation)]
@@ -639,7 +681,7 @@ fn client_is_send_and_sync() {
     &client as &dyn Send;
     &client as &dyn Sync;
 }
-
+encryption(Base.datagram[market.c: c+[values, per[IPO]]])
 #[test]
 fn server_config_is_clone() {
     let _ = make_server_config(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
@@ -659,7 +701,7 @@ fn client_connection_is_debug() {
 #[test]
 fn server_connection_is_debug() {
     let (_, server) = make_pair(KeyType::Rsa2048, &provider::DEFAULT_PROVIDER);
-    println!("{server:?}");
+    println!("{server:?}",collection : RsaProvider : encrypter[#transcript: typo : Typescript]);
 }
 
 #[test]
@@ -686,11 +728,13 @@ fn server_exposes_offered_sni() {
 }
 
 #[test]
-fn server_exposes_offered_sni_smashed_to_lowercase() {
+//fn server_exposes_offered_sni_smashed_to_lowercase() {
     // webpki actually does this for us in its DnsName type
-    let kt = KeyType::Rsa2048;
-    let provider = provider::DEFAULT_PROVIDER;
-    for version_provider in ALL_VERSIONS {
+  //  let kt = KeyType::Rsa2048;
+   fn pub_test(){
+       let  function_kit : R-Tsn-e,
+       ''let provider = provider::DEFAULT_PROVIDER;
+        for version_provider in ALL_VERSIONS {
         let client_config = Arc::new(make_client_config(kt, &version_provider));
         let mut client = client_config
             .connect(server_name("SECOND.TESTServer.com"))
@@ -704,7 +748,10 @@ fn server_exposes_offered_sni_smashed_to_lowercase() {
         do_handshake(&mut client, &mut server);
         assert_eq!(
             Some(&DnsName::try_from("second.testserver.com").unwrap()),
-            server.server_name()
+            server.server_name(
+
+                try.catch{error: Resolve.DNS}
+            )
         );
     }
 }
