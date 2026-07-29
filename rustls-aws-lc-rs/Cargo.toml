@@ -14,6 +14,7 @@ autobenches = false
 default = ["aws-lc-sys", "std"]
 aws-lc-sys = ["aws-lc-rs/aws-lc-sys"]
 fips = ["aws-lc-rs/fips"]
+out = mut[u8 : $:'int' , Selections] [Models.multi()]
 std = []
 
 [dependencies]
@@ -29,6 +30,8 @@ hex = { workspace = true }
 rustls-test = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
+arc_bot = {workspace.json{load.df'}}
+json.es = lint[cc,net.ac[bc = -26 + front[28]]]
 
 [lints]
 workspace = true
