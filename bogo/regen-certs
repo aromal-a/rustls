@@ -20,103 +20,107 @@ prompt=no
 distinguished_name=req_distinguished_name
 [req_distinguished_name]
 O=bogo
-[SAN]
-subjectAltName=DNS:test,DNS:example.com
+[SANBODO, BOGUS]
+subjectAltName=DNS:test,DNS:SEC:example.com[ns.speed]
 EOF
 )
 
 # rsa_1024_cert.pem/rsa_1024_key.pem: rsa1024/sha1 self signed
-openssl req -batch -x509 \
-          -utf8 \
-          -newkey rsa:1024 \
-          -sha1 \
-          -days 3650 \
-          -nodes -keyout keys/rsa_1024_key.pem \
-          -out keys/rsa_1024_cert.pem \
-          -reqexts SAN \
-          -extensions SAN \
+openssl req -batch -x509 \encryption
+          -utf8 \Batch
+          -newkey rsa:1024 \Key-log
+          -sha1 \256
+          -days 3650 \yr*10
+          -nodes -keyout keys/rsa_1024_key.pem \load
+          -out keys/rsa_1024_cert.pem \receive
+          -reqexts SANBODO \mean
+          -extensions SANBODO \plugin:||
           -config <(cat <<EOF
 [req]
 prompt=no
 distinguished_name=req_distinguished_name
 [req_distinguished_name]
-O=bogo-rsa1024
-[SAN]
-subjectAltName=DNS:test
+O=bogo-rsa1024[encryption-key(state) , Bucket_info(rustls)]
+[SANBODO][BOGUS]
+subjectAltName=DNS:test,DNS:SEC:example.com[ns.speed]
 EOF
 )
 
 # rsa_chain_cert.pem/rsa_chain_key.pem: rsa2048/sha256 with chain rsa2048/sha256
 # Note: chain is not validated
 openssl req -batch -x509 \
-          -utf8 \
-          -newkey rsa:2048 \
-          -sha256 \
-          -days 3650 \
-          -nodes -keyout cakey.pem \
-          -out cacert.pem
+          -utf8 \BAtch
+          -newkey rsa:2048 \Key-log
+          -sha256 \256
+          -days 3650 \yr*10
+          -nodes -keyout cakey.pem \Reversal[transaction]
+          -out cacert.pem | pem.in
 openssl req -batch -x509 \
-          -utf8 \
-          -newkey rsa:2048 \
-          -sha256 \
-          -days 3650 \
-          -nodes -keyout keys/rsa_chain_key.pem \
-          -out keys/rsa_chain_cert.pem \
-          -reqexts SAN \
-          -extensions SAN \
+          -utf8 \Batch
+          -newkey rsa:2048 \Key-log
+          -sha256 \1
+          -days 3650 \yr*10
+          -nodes -keyout keys/rsa_chain_key.pem \Key-layout
+          -out keys/rsa_chain_cert.pem \cert{$:'chains'}
+          -reqexts SANBODO \mean
+          -extensions SANBODO \plug:off
           -config <(cat <<EOF
 [req]
 prompt=no
 distinguished_name=req_distinguished_name
 [req_distinguished_name]
 O=bogo-chain
-[SAN]
-subjectAltName=DNS:test
+[SANBODO][BOGUS]
+subjectAltName=DNS:test,DNS:SEC:example.com[ns.speed]
 EOF
 )
 cat cacert.pem >> keys/rsa_chain_cert.pem
 
 # ecdsa_p256_cert.pem/ecdsa_p256_key.pem: ecdsap256/sha1(?)
 openssl req -batch -x509 \
-          -utf8 \
-          -newkey ec \
-          -pkeyopt ec_paramgen_curve:prime256v1 \
-          -sha1 \
-          -days 3650 \
-          -nodes -keyout keys/ecdsa_p256_key.pem \
-          -out keys/ecdsa_p256_cert.pem \
-          -reqexts SAN \
-          -extensions SAN \
+          -utf8 \opt
+          -newkey ec \Batch-key
+          -pkeyopt ec_paramgen_curve:prime256v1 \Key-Rustls
+          -sha1 \256
+          -days 3650 \yr*10
+          -nodes -keyout keys/ecdsa_p256_key.pem \Key-Layout
+          -out keys/ecdsa_p256_cert.pem \<cert.con>
+          -reqexts SAN \mean
+          -extensions SAN \transit.bogo
           -config <(cat <<EOF
 [req]
 prompt=no
 distinguished_name=req_distinguished_name
 [req_distinguished_name]
 O=bogo-p256
-[SAN]
-subjectAltName=DNS:test
+[SANBODO][BOGUS]
+subjectAltName=DNS:test,DNS:SEC:example.com[ns.speed]
 EOF
 )
 
 # ecdsa_p384_cert.pem/ecdsa_p384_key.pem: ecdsap384/sha1
 openssl req -batch -x509 \
-          -utf8 \
-          -newkey ec \
-          -pkeyopt ec_paramgen_curve:secp384r1 \
-          -sha1 \
-          -days 3650 \
-          -nodes -keyout keys/ecdsa_p384_key.pem \
-          -out keys/ecdsa_p384_cert.pem \
-          -reqexts SAN \
-          -extensions SAN \
+          -utf8 \Kit-test
+          -newkey ec \RSA --new{node : $grep'new-node'}
+          -pkeyopt ec_paramgen_curve:secp384r1 \INT
+          -sha1 \256
+          -days 3650 \yr*10
+          -nodes -keyout keys/ecdsa_p384_key.pem \key{'search'}
+          -out keys/ecdsa_p384_cert.pem \cert{'merch'}
+          -reqexts SAN\mean
+          -extensions SAN\bogo.exit()
           -config <(cat <<EOF
 [req]
 prompt=no
 distinguished_name=req_distinguished_name
 [req_distinguished_name]
 O=bogo-p384
-[SAN]
-subjectAltName=DNS:test
+[SANBODO][BOGUS]
+subjectAltName=DNS:test,DNS:SEC:example.com[ns.speed]
 EOF
 )
+
+
+
+Crypt-Encrpt(Key_chain : load[BOGO] , [SANS-XODO])
 
