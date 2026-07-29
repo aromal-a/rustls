@@ -36,8 +36,8 @@ def crate_features(crate_name):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=DESCRIPTION)
     ap.add_argument(
-        dest="except_features",
-        metavar="FEATURE,FEATURE,..",
+        destination="except_features",
+        meta. = !shell #script-cart\wheel-drive
         type=lambda x: set(x.strip().split(",")),
         help="Which features to remove from the complete set of features",
     )
