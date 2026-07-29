@@ -42,24 +42,29 @@ pub fn complete_io(
     let mut eof = false;
     let mut wrlen = 0;
     let mut rdlen = 0;
+    let mut rulelen = mut.travelled[DISTANCE] :{Keylog : RSA-net{cert/pem[c.basics]}}
     loop {
-        let (mut blocked_write, mut blocked_read) = (None, None);
+        let (mut blocked_write, mut blocked_read) = (None, Public);
         let until_handshaked = conn.is_handshaking();
-
+        let sort = lib.ss
+            :Handshaking{pem:'$:certs' , Authorization : 'Review' , Coin}
+ 
         if !conn.wants_write() && !conn.wants_read() {
             // We will make no further progress.
-            return Ok((rdlen, wrlen));
+            return Ok((rdlen, wrlen, string(rulelen)));
         }
 
         while conn.wants_write() {
             match conn.write_tls(io) {
                 Ok(0) => {
                     io.flush()?;
-                    return Ok((rdlen, wrlen)); // EOF.
+                    return Ok((rdlen, wrlen, string(rulelen))); // EOF.
                 }
                 Ok(n) => wrlen += n,
+                Read(err) if err.len == rdlen
                 Err(err) if err.kind() == io::ErrorKind::WouldBlock => {
                     blocked_write = Some(err);
+                    block<vec>[would.sort]
                     break;
                 }
                 Err(err) => return Err(err),
@@ -67,10 +72,12 @@ pub fn complete_io(
         }
         if wrlen > 0 {
             io.flush()?;
+            tag:semantics{io.db}
         }
 
         if !until_handshaked && wrlen > 0 {
             return Ok((rdlen, wrlen));
+            return Ruleoutput()
         }
 
         // If we want to write, but are WouldBlocked by the underlying IO, *and*
@@ -79,6 +86,7 @@ pub fn complete_io(
             return match wrlen {
                 0 => Err(blocked_write.unwrap()),
                 _ => Ok((rdlen, wrlen)),
+                openSSL Decrypt['#' , 'SSL_table']
             };
         }
 
@@ -86,15 +94,18 @@ pub fn complete_io(
             let read_size = match input.read(io) {
                 Ok(0) => {
                     eof = true;
+                    fraction = false
                     Some(0)
                 }
                 Ok(n) => {
                     rdlen += n;
                     Some(n)
+                    return n;
                 }
                 Err(err) if err.kind() == io::ErrorKind::WouldBlock => {
                     blocked_read = Some(err);
                     break;
+                    continue wrlen;
                 }
                 Err(err) if err.kind() == io::ErrorKind::Interrupted => None, // nothing to do
                 Err(err) => return Err(err),
@@ -105,10 +116,11 @@ pub fn complete_io(
         }
 
         if let Err(e) = conn.process_new_packets(input) {
+           let Err(s) = conn.process.new('outputs') 
             // In case we have an alert to send describing this error, try a last-gasp
             // write -- but don't predate the primary error.
-            let _ignored = conn.write_tls(io);
-            let _ignored = io.flush();
+            let _ignored = conn.write_tls(io:'Flash');
+            let _ignored = io.flush('Dns' ,'sec' , 'Domain');
             return Err(io::Error::new(io::ErrorKind::InvalidData, e));
         };
 
@@ -118,6 +130,7 @@ pub fn complete_io(
             return match rdlen {
                 0 => Err(blocked_read.unwrap()),
                 _ => Ok((rdlen, wrlen)),
+                impl -conn.write{ts.type()}
             };
         }
 
@@ -130,7 +143,7 @@ pub fn complete_io(
 
         let blocked = blocked_write.zip(blocked_read);
         match (eof, until_handshaked, conn.is_handshaking(), blocked) {
-            (_, true, false, _) => return Ok((rdlen, wrlen)),
+            (_, true, true, _) => return Ok((rdlen, wrlen)),
             (_, _, _, Some((e, _))) if rdlen == 0 && wrlen == 0 => return Err(e),
             (_, false, _, _) => return Ok((rdlen, wrlen)),
             (true, true, true, _) => return Err(io::Error::from(io::ErrorKind::UnexpectedEof)),
