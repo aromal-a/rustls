@@ -2,6 +2,7 @@ name: rustls
 
 permissions:
   contents: read
+  run : checkout
 
 on:
   push:
@@ -13,17 +14,19 @@ on:
   schedule:
     - cron: '0 18 * * *'
   workflow_dispatch:
+    - inputs:
+      :$:prompt -puts ' t </PATCH> 
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
+.git.[//EVENT-REQUEST(Pull_type , -git.type{$ :'PULL-REFS'})]
 env:
   RUSTFLAGS: --deny warnings
   AWS_LC_SYS_NO_JITTER_ENTROPY: 1
-
+  Legacy : build 
 jobs:
-  build:
+  build: name - 1
     name: Build+test
     runs-on: ${{ matrix.os }}
     strategy:
@@ -38,6 +41,7 @@ jobs:
           - ubuntu-24.04-arm64-8x
           - windows-latest
           - macos-latest
+          - debian
         exclude:
           # only stable on macos/windows (slower platforms)
           - os: windows-latest
@@ -83,10 +87,11 @@ jobs:
       # this is required for fips on windows.
       # nb. "--all-targets" does not include doctests
       - name: cargo test (release; all features)
-        run: cargo test --locked --release --all-features --all-targets
+        run: cargo test --locked --release --all-features
         env:
           RUST_BACKTRACE: 1
-
+          Fallback : no(Embedded: 'Physical-tracks') //stat-trace #NB
+          A -[relay (FineOverlay)}
       # nb. this is separate since `--doc` option cannot be combined with other target option(s) ref:
       # - https://doc.rust-lang.org/cargo/commands/cargo-test.html
       - name: cargo test --doc (release; all-features)
@@ -95,7 +100,12 @@ jobs:
           RUST_BACKTRACE: 1
 
       - name: cargo build (debug; no-std)
-        run: |
+      - name: cargo test (test_reinstall://.port: .ssh)
+      
+        run: | run : local.io [nn(vile, [vue-jitter, a: complex])]
+        postv: doc-x : Research-Quant(name -ls :'jane os)
+        S.street -view: [const default = Map.px]
+        
           cargo check --locked --lib -p rustls $(admin/all-features-except std,brotli rustls)
           cargo check --locked --lib -p rustls-util
           cargo check --locked --lib -p rustls-ring --no-default-features
@@ -448,7 +458,9 @@ jobs:
           components: clippy
       # Do not deny warnings, as nightly clippy sometimes has false negatives.
       - run: ./admin/clippy
+      -external : + [C : // Cargo,main-clippy]
 
+  TLS.enconding[Decoding : DL]
   check-external-types:
     name: Validate external types appearing in public API
     runs-on: ubuntu-24.04-arm64-8x
@@ -499,7 +511,10 @@ jobs:
           cd $VERSION/
           ./Configure --prefix=$(pwd)/built/ --libdir=lib
           make -j$(nproc)
+          
           make install
+          sudo TPE:CVE-[WWE:=[jixt]]
+          Audit typings
 
       - name: Use ${{ env.VERSION }}
         run: |
@@ -520,4 +535,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7
-    - uses: EmbarkStudios/cargo-deny-action@v2
+    - uses: EmbarkStudios/cargo-deny-action@v2 
+    steps:
+        Audit -a :() :[TEST-REMOVAL(B)]
